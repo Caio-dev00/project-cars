@@ -1,4 +1,4 @@
-import logoImg from '../../assets/logo.png'
+import logoImg from '../../assets/logo2.png'
 import { Link } from 'react-router-dom';
 import { FiUser, FiLogIn } from 'react-icons/fi'
 
@@ -11,7 +11,7 @@ export default function Header() {
       <header className='flex w-full max-w-7xl items-center justify-between px-4 mx-auto'>
         <Link to="/">
           <img
-            className='w-40'
+            className='w-44'
             src={logoImg}
             alt='Logo site webMotors'
           />

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logoImg from '../../assets/logo.png'
+import logoImg from '../../assets/logo1.png'
 import { Container } from '../../components/container'
 
 import { Input } from '../../components/input'
@@ -36,7 +36,9 @@ export function Login() {
             />
         </Link>
 
-        <form onSubmit={handleSubmit(onSubmit)} className='bg-white max-w-xl w-full rounded-lg'>
+        <form 
+        onSubmit={handleSubmit(onSubmit)} 
+        className='bg-white max-w-xl w-full rounded-lg p-4'>
 
           <div className='mb-3'>
 
@@ -62,11 +64,16 @@ export function Login() {
 
           </div>
 
-          <button>
+          <button type='submit' className='bg-zinc-900 w-full rounded-md text-white h-10 font-medium'>
             Acessar
           </button>
 
         </form>
+
+        <Link to="/register">
+          Ainda não possui uma conta? Registre-se agora!
+        </Link>
+
       </div>
     </Container>
   )
