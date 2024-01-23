@@ -10,8 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AuthContext } from "../../../contexts/AuthContext"
 import { v4 as uuidV4 } from 'uuid'
 
-import { storage } from "../../../services/firebaseConnection"
+import { storage, db } from "../../../services/firebaseConnection"
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
+import { addDoc, collection } from 'firebase/firestore'
 
 const schema = z.object({
   name: z.string().min(1, "O campo nome é obrigatório"),
@@ -45,7 +46,44 @@ export function New() {
   const [carImages, setCarImages] = useState<ImageItemProps[]>([])
 
   function onSubmit(data: FormData){
-    console.log(data)
+    if(carImages.length === 0){
+      alert("Envie alguma imagem do carro")
+      return;
+    }
+
+    const carListImages = carImages.map(car => {
+      return{
+        uid: car.uid,
+        name: car.name,
+        url: car.url
+      }
+    })
+
+    addDoc(collection(db, "cars"), {
+      name: data.name,
+      model: data.model,
+      whatsapp: data.zap,
+      city: data.city,
+      year: data.year,
+      km: data.km,
+      price: data.price,
+      description: data.description,
+      created: new Date(),
+      owner: user?.name,
+      uid: user?.uid,
+      images: carListImages,
+    })
+    .then(() => {
+      reset();
+      setCarImages([]);
+      console.log("CADASTRADO COM SUCESSO!")
+    })
+    .catch((error) => {
+      console.log(error)
+      console.log("ERRO AO CADASTRAR NO BANCO!")
+    })
+
+
   }
 
   async function handleFile(e: ChangeEvent<HTMLInputElement>){
