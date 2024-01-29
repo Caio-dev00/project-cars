@@ -54,13 +54,13 @@ export function New() {
     const carListImages = carImages.map(car => {
       return{
         uid: car.uid,
-        name: car.name,
+        name: car.name.toUpperCase(),
         url: car.url
       }
     })
 
     addDoc(collection(db, "cars"), {
-      name: data.name,
+      name: data.name.toUpperCase(),
       model: data.model,
       whatsapp: data.zap,
       city: data.city,
