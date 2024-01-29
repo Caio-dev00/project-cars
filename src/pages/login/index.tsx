@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logoImg from '../../assets/logo1.png'
 import { Container } from '../../components/container'
@@ -9,7 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { auth } from '../../services/firebaseConnection'
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { useEffect } from 'react'
+
+import toast from 'react-hot-toast'
 
 const schema = z.object({
   email: z.string().email("Insira um email valido!").min(0, 'O campo email é obrigatório!'),
@@ -36,10 +38,12 @@ export function Login() {
     signInWithEmailAndPassword(auth, data.email, data.password)
     .then(async () => {
       console.log('USUARIO LOGADO COM SUCESSO')
+      toast.success("Logado com sucesso!")
       navigate('/dashboard', { replace: true })
     })
     .catch((error) => {
       console.error("ERRO AO FAZER LOGIN")
+      toast.error("Erro ao logar")
       console.log(error)
     })
   }
